@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -13,7 +12,12 @@
   </head>
   <body>
     <div class="container">
-      
+    <br/>
+      @if (session('status'))
+        <div class="alert alert-danger">
+            {{ session('status') }}
+        </div>
+      @endif
       <h2>Sistema de cadastro de funcionarios</h2>
       <br/>
       <form method="post" action="{{url('create_user')}}" enctype="multipart/form-data">
@@ -47,8 +51,9 @@
             </div>
           </div>
           <div class="col-md-4"></div>
-          <div class="form-group col-md-4" style="margin-top:10px; left: 12%;">
-            <button type="submit" class="btn btn-success">Cadastrar</button>
+          <div class="form-group col-md-4" style="margin-top:10px;">
+            <a href="/workers_list" class="btn btn-danger" >Cancelar</a>
+            <button type="submit" class="btn btn-success" >Cadastrar</button>
           </div>
       </form>
   </body>
