@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/list-users', 'RegisterController@getUsers');
+
+Route::post('/singIn','RegisterController@addUser');
