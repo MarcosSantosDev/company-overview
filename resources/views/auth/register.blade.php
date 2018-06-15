@@ -14,29 +14,36 @@
   <body>
     <div class="container">
       
-      <h2>System of the register</h2>
+      <h2>Sistema de cadastro de funcionarios</h2>
       <br/>
-      <form method="post" action="{{url('singIn')}}" enctype="multipart/form-data">
+      <form method="post" action="{{url('create_user')}}" enctype="multipart/form-data">
         @csrf
         <div class="row">
           <div class="col-md-4"></div>
           <div class="form-group col-md-4">
-            <label for="Name">Name:</label>
-            <input type="text" class="form-control" name="name">
+            <label for="Name">Nome do funcionario:</label>
+            <input type="text" class="form-control" name="name" required>
           </div>
         </div>
         <div class="row">
           <div class="col-md-4"></div>
             <div class="form-group col-md-4">
               <label for="Email">Email:</label>
-              <input type="text" class="form-control" name="email">
+              <input type="email" class="form-control" name="email" required>
             </div>
           </div>
         <div class="row">
           <div class="col-md-4"></div>
             <div class="form-group col-md-4">
-              <label for="Password">Password:</label>
-              <input type="password" class="form-control" name="password">
+              <label for="Password">senha:</label>
+              <input type="password" class="form-control" name="password" required>
+            </div>
+          </div>
+          <div class="row">
+          <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+              <label for="Password">Comfirme sua senha:</label>
+              <input type="password" class="form-control" name="validatePassword" required>
             </div>
           </div>
           <div class="col-md-4"></div>

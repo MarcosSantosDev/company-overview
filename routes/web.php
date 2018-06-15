@@ -17,6 +17,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/list-users', 'RegisterController@getUsers');
+Route::get('/list_func', 'RegisterController@getUsers');
 
-Route::post('/singIn','RegisterController@addUser');
+Route::get('/edit/{id}', 'RegisterController@editUser');
+
+Route::post('/create_user','RegisterController@addUser');
+
+Route::get('/update/{id}','RegisterController@updateUser');
+
+Route::get('/delete_user{id}','RegisterController@deleteUser');

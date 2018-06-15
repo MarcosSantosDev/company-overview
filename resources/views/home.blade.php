@@ -9,6 +9,23 @@
     <script src="main.js"></script>
 </head>
 <body>
-    <?php return $users ?>
+                 
+@foreach($users as $user)
+        
+        <tr>
+            <td>$user->id</td>
+            <td>$user->name</td>
+            <td>$user->email</td>
+            
+            <td><a href="{{action('RegisterController@edit', $user->id)}}" class="btn btn-warning">Edit</a></td>
+            <td>
+            <form action="{{action('RegisterController@destroy', $user->id)}}" method="post">
+                @csrf
+                <input name="_method" type="hidden" value="DELETE">
+                <button class="btn btn-danger" type="submit">Delete</button>
+            </form>
+            </td>
+        </tr>
+      @endforeach
 </body>
 </html>

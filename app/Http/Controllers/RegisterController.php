@@ -3,62 +3,65 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
 
 class RegisterController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function getUsers()
     {
         $users=\App\Register::all();
-
-        // if($users){
-        //     return view('home', $users);
-        // }else{
-            // return view('register');
-        // }
-        return $users;
+        
+        if($users){
+            return view('list_func', ['users' => $users]);
+        }else{
+            return view('list_func');
+        }
     }
 
-/**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function addUser(Request $request)
     {
      
         $register= new \App\Register;
 
-        $register->name=$request->get('name');
-        $register->email=$request->get('email');
-        $register->password=$request->get('password');
-
-        $register->save();
+        $register->name = $request->get('name');
+        $register->email = $request->get('email');
+        $register->password = $request->get('password');
+        $validatePassword = $request->get('validatePassword');
         
-        return redirect('list-users')->with('success', 'Information has been added');
+        if($register->password === $validatePassword){
+            $register->save();
+            return redirect('list_func')->with('success', 'Funcionario cadastrado com sucesso!');
+        }else{
+            return redirect('register')->with('success', 'Senhas não coecidem!');
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-   
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function editUser($id)
     {
-        $deleted = DB::delete('delete from users');
+        $user = \App\Register::find($id);
+
+        return view('auth.edit', compact('user', 'id'));
     }
+ 
+    public function updateUser(Request $request, $id)
+    {
+        $user= \App\Register::find($id);
+
+        $user->name=$request->get('name');
+        $user->email=$request->get('email');
+        $user->password=$request->get('password');
+
+        $user->save();
+    
+        return redirect('list_func')->with('success','Funcionario atualizado com sucesso!');
     }
+
+    public function deleteUser($id)
+    {
+        $deleted = \App\Register::find($id);
+
+        $deleted->delete();
+        return redirect('list_func')->with('success','Funcionario deletado com sucesso!');
+        
+    }
+}
