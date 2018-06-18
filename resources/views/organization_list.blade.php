@@ -21,8 +21,6 @@
       <a  style="width:100%; margin: 0 auto" href="{{url('create_organization_form')}}" class="btn btn-primary">Criar nova Empresa</a></td> 
         <thead>
           <tr style="text-align:center;">
-            <th>Id</th>           
-            <th>Id Empresa</th>
             <th>Organizações</th>
             <th>Descrição</th>
             <th colspan="3">Ações</th>
@@ -31,7 +29,6 @@
         <tbody>       
           @foreach($organizations as $organization)        
             <tr style="text-align:center;">
-              <td>{{$organization->id}}</td>
               <td>{{$organization->title}}</td>
               <td>{{$organization->description}}</td>            
               <td>

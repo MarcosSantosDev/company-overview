@@ -21,19 +21,15 @@
       <a style="width: 100%; margin: 1%" href="/form_add_user/{{$id}}" class="btn btn-primary">Adicionar novo funcionario</a></td> 
       <table class="table table-striped">
         <thead>
-          <tr>
-            <th>Id</th>           
-            <th>Id Empresa</th>
+            <tr style="text-align:center;">
             <th>Name</th>
             <th>Email</th>
-            <th colspan="2">Action</th>
+            <th colspan="2">Ações</th>
           </tr>
         </thead>
         <tbody>       
           @foreach($usersOfTheOrganization as $user)        
-            <tr>
-              <td>{{$user->id}}</td>
-              <td>{{$user->id_company}}</td>
+            <tr style="text-align:center;">
               <td>{{$user->name}}</td>
               <td>{{$user->email}}</td>
               <td>
