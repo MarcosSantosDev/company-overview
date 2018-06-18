@@ -25,7 +25,7 @@ class workersController extends Controller
     
             return redirect()->action('organizationController@findUsersOrganization', ['id' => $id]);
         }else{
-            return redirect('register')->with('status', 'Senhas não coecidem!');
+            return redirect()->back()->with('status', 'Senhas não coecidem!');
         }
     }
     
