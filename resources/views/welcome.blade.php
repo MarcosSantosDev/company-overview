@@ -63,9 +63,7 @@
     <body>
         <div class="flex-center position-ref full-height">
             <div class="top-right links">
-                <a href="{{url('create_organization_form')}}">Criar uma nova empresa</a>
                 <a href="{{url('organization_list')}}">Empresas</a>
-                <a href="{{url('workers_list')}}">Funcionario</a>
             </div>
             <div class="title m-b-md">
                 CRUD Laravel!

@@ -7,44 +7,35 @@ use Illuminate\Http\Request;
 class workersController extends Controller
 {
  
-    public function getUsers()
-    {
-        $users=\App\Workers::all();
-        
-        if($users){
-            return view('workers_list', ['users' => $users]);
-        }else{
-            return view('workers_list');
-        }
-    }
 
-
-    public function addUser(Request $request)
+    public function addUser(Request $request, $id)
     {
      
         $worker= new \App\Workers;
 
+        $worker->id_company = $id;
         $worker->name = $request->get('name');
         $worker->email = $request->get('email');
         $worker->password = $request->get('password');
         $validatePassword = $request->get('validatePassword');
         
         if($worker->password === $validatePassword){
+            
             $worker->save();
-            return redirect('workers_list')->with('status', 'Funcionario cadastrado com sucesso!');
+    
+            return redirect()->action('organizationController@findUsersOrganization', ['id' => $id]);
         }else{
             return redirect('register')->with('status', 'Senhas não coecidem!');
         }
     }
-
     
     public function editUser($id)
     {
         $user = \App\Workers::find($id);
 
-        return view('auth.edit', compact('user', 'id'));
+        return view('auth.edit_user', compact('user', 'id'));
     }
- 
+
     
     public function updateUser(Request $request, $id)
     {
@@ -55,17 +46,17 @@ class workersController extends Controller
         $user->password=$request->get('password');
 
         $user->save();
-    
-        return redirect('workers_list')->with('success','Funcionario atualizado com sucesso!');
+
+        return redirect()->action('organizationController@findUsersOrganization', ['id' => $user->id_company]);   
     }
 
     
     public function deleteUser($id)
     {
-        $deleted = \App\Workers::find($id);
+        $user = \App\Workers::find($id);
 
-        $deleted->delete();
-        return redirect('workers_list')->with('success','Funcionario deletado com sucesso!');
+        $user->delete();
         
+        return redirect()->action('organizationController@findUsersOrganization', ['id' => $user->id_company]);
     }
-}
+}   

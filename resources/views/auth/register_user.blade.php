@@ -20,7 +20,7 @@
       @endif
       <h2>Sistema de cadastro de funcionarios</h2>
       <br/>
-      <form method="post" action="{{url('create_user')}}" enctype="multipart/form-data">
+      <form method="post" action="/create_user/{{$id}}" enctype="multipart/form-data">
         @csrf
         <div class="row">
           <div class="col-md-4"></div>

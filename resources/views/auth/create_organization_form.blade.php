@@ -13,33 +13,33 @@
   </head>
   <body>
     <div class="container">
-    <br/>
       @if (session('status'))
         <div class="alert alert-danger">
             {{ session('status') }}
         </div>
       @endif
-      <h2>Sistema de cadastro de funcionários</h2>
+      <h2>Sistema de cadastro de empresa</h2>
       <br/>
       <form method="post" action="{{url('create_organization')}}" enctype="multipart/form-data">
         @csrf
         <div class="row">
-        <div class="col-md-4"></div>
+            <div class="col-md-4"></div>
             <div class="form-group col-md-4">
                 <label for="Title">Nome da Empresa:</label>
                 <input type="text" class="form-control" name="title" required>
             </div>
         </div>
-        <div class="col-md-4"></div>
+        <div class="row">
+            <div class="col-md-4"></div>
             <div class="form-group col-md-4">
                 <label for="Description">Descrição:</label>
                 <input type="text" class="form-control" name="description" required>
             </div>          
         </div>
-      
-        <div class="col-md-4"></div>
-            <div class="form-group col-md-4" style="margin-top:10px;">
-                <a href="/workers_list" class="btn btn-danger" >Cancelar</a>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4" >
+                <a href="{{url('organization_list')}}" class="btn btn-danger" >Cancelar</a>
                 <button type="submit" class="btn btn-success" >Cadastrar</button>
             </div>
         </div>

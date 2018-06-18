@@ -18,9 +18,9 @@ class organizationController extends Controller
         
         if($organization){
             $organization->save();
-            return redirect('organizations_list')->with('status', 'Empresa criada com sucesso!');
+            return redirect('organization_list')->with('status', 'Empresa criada com sucesso!');
         }else{
-            return redirect('organizations_list')->with('status', 'Todos os campos devem ser preenchidos!');
+            return redirect('organization_list')->with('status', 'Todos os campos devem ser preenchidos!');
         }
     }
     
@@ -45,20 +45,51 @@ class organizationController extends Controller
     public function updateOrganization(Request $request, $id)
     {
         $organization= \App\Organization::find($id);
-        
         $organization->title=$request->get('title');
         $organization->description=$request->get('description');
-        
+
         $organization->save();
-        
         return redirect('organization_list')->with('success','Dados atualizado com sucesso!');
     }
+  
 
     public function deleteOrganization($id)
     {
-        $delete = \App\Organization::find($id);
+        $organization = \App\Organization::find($id);
+        $users = \App\Workers::all();
 
-        $delete->delete();
+        foreach($users as $user){
+            if($user->id_company == $id){
+                $user->delete();
+            }
+        }
+        
+        $organization->delete();
+        
         return redirect('organization_list')->with('success','Empresa deletada com sucesso!');
+    }
+
+    public function findUsersOrganization($id)
+    {
+        $users=\App\Workers::all();
+        
+        $usersOfTheOrganization = [];
+
+        foreach ($users as $user) {
+            if($user->id_company == $id){
+                array_push($usersOfTheOrganization, $user);
+            }
+        }
+
+        if($usersOfTheOrganization){
+            return view('workers_list')->with(compact('usersOfTheOrganization', 'id'));
+        }else{
+            return view('workers_list')->with(compact('usersOfTheOrganization', 'id'));
+        }    
+    }
+
+    public function addUser($id)
+    {
+        return view('auth.register_user')->with(compact('id'));
     }
 }

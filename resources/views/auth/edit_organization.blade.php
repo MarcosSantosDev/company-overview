@@ -9,24 +9,22 @@
     <div class="container">
     <br/>
       <h2>Atualização de dados</h2><br  />
-        <form method="get" action="/update_organization/{{$organization->id}}">
+      <form method="get" action="/update_organization/{{$organization->id}}">
         @csrf
-        <input name="_method" type="hidden" value="PATCH">
         <div class="row">
           <div class="col-md-4"></div>
           <div class="form-group col-md-4">
             <label for="name">Title Organização:</label>
-            <input type="text" class="form-control" name="name" value="{{$organization->title}}">
+            <input type="text" class="form-control" name="title" value="{{$organization->title}}" required>
           </div>
         </div>
         <div class="row">
           <div class="col-md-4"></div>
-            <div class="form-group col-md-4">
-              <label for="description">Description</label>
-              <input type="text" class="form-control" name="description" value="{{$organization->description}}">
-            </div>
+          <div class="form-group col-md-4">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" name="description" value="{{$organization->description}}" required>
           </div>
-        
+        </div>
         <div class="row">
           <div class="col-md-4"></div>
           <div class="form-group col-md-4" style="margin-top:20px">

@@ -7,28 +7,35 @@
   </head>
   <body>
     <div class="container">
-    <br />
-     @if (session('status'))
+      <br/>
+        <a  style="width:10%; margin-left: 90%;" href="{{url('/organization_list')}}" class="btn" > Voltar </a></td> 
+      <br/>
+      @if (session('status'))
         <div class="alert alert-success">
+        <a href="#" class="close" data-dismiss="alert" arial-label="close" >&times;</a>
             {{ session('status') }}
         </div>
       @endif
       <h2>Lista de funcionarios</h2>
       <br />
-      <a style="width: 100%; margin: 1%" href="{{url('register')}}" class="btn btn-primary">Adicionar novo funcionario</a></td> 
+      <a style="width: 100%; margin: 1%" href="/form_add_user/{{$id}}" class="btn btn-primary">Adicionar novo funcionario</a></td> 
       <table class="table table-striped">
         <thead>
           <tr>
+            <th>Id</th>           
+            <th>Id Empresa</th>
             <th>Name</th>
             <th>Email</th>
             <th colspan="2">Action</th>
           </tr>
         </thead>
         <tbody>       
-          @foreach($users as $user)        
+          @foreach($usersOfTheOrganization as $user)        
             <tr>
+              <td>{{$user->id}}</td>
+              <td>{{$user->id_company}}</td>
               <td>{{$user->name}}</td>
-              <td>{{$user->email}}</td>            
+              <td>{{$user->email}}</td>
               <td>
                 <a style="margin: 1%" href="{{action('workersController@editUser', $user->id)}}" class="btn btn-warning">Editar</a></td>
               </td>
