@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Organization;
 use Illuminate\Http\Request;
 
 class organizationController extends Controller
@@ -11,7 +12,7 @@ class organizationController extends Controller
     public function addOrganization(Request $request)
     {
         
-        $organization= new \App\Organization;
+        $organization= new Organization;
         
         $organization->title = $request->get('title');
         $organization->description = $request->get('description');
@@ -26,7 +27,7 @@ class organizationController extends Controller
     
     public function getOrganization()
     {
-        $organizations=\App\Organization::all();
+        $organizations= Organization::all();
         
         if($organizations){
             return view('organization_list', ['organizations' => $organizations]);
@@ -37,14 +38,14 @@ class organizationController extends Controller
 
     public function editOrganization($id)
     {
-        $organization = \App\Organization::find($id);
+        $organization = Organization::find($id);
         
         return view('auth.edit_organization', compact('organization', 'id'));
     }
 
     public function updateOrganization(Request $request, $id)
     {
-        $organization= \App\Organization::find($id);
+        $organization= Organization::find($id);
         $organization->title=$request->get('title');
         $organization->description=$request->get('description');
 
@@ -55,7 +56,7 @@ class organizationController extends Controller
 
     public function deleteOrganization($id)
     {
-        $organization = \App\Organization::find($id);
+        $organization = Organization::find($id);
         $users = \App\Workers::all();
 
         foreach($users as $user){

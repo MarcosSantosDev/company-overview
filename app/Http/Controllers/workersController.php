@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Workers;
 use Illuminate\Http\Request;
 
 class workersController extends Controller
@@ -11,7 +12,7 @@ class workersController extends Controller
     public function addUser(Request $request, $id)
     {
      
-        $worker= new \App\Workers;
+        $worker= new Workers;
 
         $worker->id_company = $id;
         $worker->name = $request->get('name');
@@ -31,7 +32,7 @@ class workersController extends Controller
     
     public function editUser($id)
     {
-        $user = \App\Workers::find($id);
+        $user = Workers::find($id);
 
         return view('auth.edit_user', compact('user', 'id'));
     }
@@ -39,7 +40,7 @@ class workersController extends Controller
     
     public function updateUser(Request $request, $id)
     {
-        $user= \App\Workers::find($id);
+        $user= Workers::find($id);
 
         $user->name=$request->get('name');
         $user->email=$request->get('email');
@@ -53,7 +54,7 @@ class workersController extends Controller
     
     public function deleteUser($id)
     {
-        $user = \App\Workers::find($id);
+        $user = Workers::find($id);
 
         $user->delete();
         
