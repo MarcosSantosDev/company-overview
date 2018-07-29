@@ -1,40 +1,39 @@
 <?php
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
-Auth::routes();
+Route::prefix('organization')->group(function ()
+{
+  Route::get('/neworganization', function(){
+    return view('auth.neworganization');
+  })->name('data.organization.new');
 
+  Route::get('/', 'organizationController@getOrganization')->name('data.organization.list');
 
-Route::view('/create_organization_form', 'auth.create_organization_form');
+  Route::post('/create', 'organizationController@addOrganization')->name('data.organization.create');
 
+  Route::get('/edit/{id}', 'organizationController@editOrganization')->name('data.organization.edit');
 
+  Route::put('/update/{id}', 'organizationController@updateOrganization')->name('data.organization.update');
 
-Route::get('/organization_list', 'organizationController@getOrganization');
+  Route::delete('/delete/{id}', 'organizationController@deleteOrganization')->name('data.organization.delete');
 
-Route::post('/create_organization', 'organizationController@addOrganization');
+  Route::get('/workers/{id}', 'organizationController@findUsersOrganization')->name('data.organization.find');
+});
 
-Route::get('/edit_organization/{id}', 'organizationController@editOrganization');
+Route::prefix('user')->group(function()
+{
+  Route::get('/form/{id}', 'organizationController@addUser')->name('data.users.find');
 
-Route::get('/update_organization/{id}', 'organizationController@updateOrganization');
+  Route::get('/workers', 'workersController@getUsers')->name('data.users.list');
 
-Route::get('/delete_organization/{id}', 'organizationController@deleteOrganization');
+  Route::post('/create/{id}','workersController@addUser')->name('data.users.create');
 
-Route::get('/find_users_organization/{id}', 'organizationController@findUsersOrganization');
+  Route::get('/edit/{id}', 'workersController@editUser')->name('data.users.edit');
 
-Route::get('/form_add_user/{id}', 'organizationController@addUser');
+  Route::put('/update/{id}','workersController@updateUser')->name('data.users.update');
 
-
-
-
-Route::get('/workers_list', 'workersController@getUsers');
-
-Route::post('/create_user/{id}','workersController@addUser');
-
-Route::get('/edit_user/{id}', 'workersController@editUser');
-
-Route::get('/update_user/{id}','workersController@updateUser');
-
-Route::get('/delete_user{id}','workersController@deleteUser');
-
+  Route::delete('/delete{id}','workersController@deleteUser')->name('data.users.delete');
+});

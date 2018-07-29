@@ -9,9 +9,9 @@
     <div class="container">
     <br/>
       <h2>Atualização de dados</h2><br  />
-        <form method="get" action="/update_user/{{$user->id}}">
+        <form action="{{ route('data.users.update', $user->id) }}" method="POST">
+        @method('PUT')
         @csrf
-        <input name="_method" type="hidden" value="PATCH">
         <div class="row">
           <div class="col-md-4"></div>
           <div class="form-group col-md-4">
@@ -36,7 +36,7 @@
         <div class="row">
           <div class="col-md-4"></div>
           <div class="form-group col-md-4" style="margin-top:20px">
-            <a href="/find_users_organization/{{$user->id_company}}" class="btn btn-danger" >Cancelar</a>
+            <a href="{{ route('data.organization.find', $user->id_company) }}" class="btn btn-danger" >Cancelar</a>
             <button type="submit" class="btn btn-success" style="left:30%">enviar</button>
           </div>
         </div>

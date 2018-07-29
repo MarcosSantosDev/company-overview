@@ -9,7 +9,8 @@
     <div class="container">
     <br/>
       <h2>Atualização de dados</h2><br  />
-      <form method="get" action="/update_organization/{{$organization->id}}">
+      <form method="post" action="{{ route('data.organization.update', $organization->id) }}">
+        @method('PUT')
         @csrf
         <div class="row">
           <div class="col-md-4"></div>
@@ -28,7 +29,7 @@
         <div class="row">
           <div class="col-md-4"></div>
           <div class="form-group col-md-4" style="margin-top:20px">
-            <a href="/organization_list" class="btn btn-danger" >Cancelar</a>
+          <a href="{{ route('data.organization.list') }}" class="btn btn-danger" >Cancelar</a>
             <button type="submit" class="btn btn-success" style="left:30%">enviar</button>
           </div>
         </div>

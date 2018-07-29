@@ -7,18 +7,17 @@
   </head>
   <body>
     <div class="container">
-      <br/>
-        <a  style="width:10%; margin-left: 90%;" href="{{url('/organization_list')}}" class="btn" > Voltar </a></td> 
-      <br/>
+        <a  style="width:10%; margin: 1% 0% 0% 90%;" href="{{ route('data.organization.list') }}" class="btn" > Voltar </a></td>
       @if (session('status'))
         <div class="alert alert-success">
         <a href="#" class="close" data-dismiss="alert" arial-label="close" >&times;</a>
             {{ session('status') }}
         </div>
       @endif
-      <h2>Lista de funcionarios</h2>
-      <br />
-      <a style="width: 100%; margin: 1%" href="/form_add_user/{{$id}}" class="btn btn-primary">Adicionar novo funcionario</a></td> 
+      <div style="margin-bottom: 3%;">
+        <h2>Lista de funcionarios</h2>
+      </div>
+      <a style="width: 100%; margin-bottom: 10px;" href="{{ route('data.users.find', $id) }}" class="btn btn-primary">Adicionar novo funcionario</a></td>
       <table class="table table-striped">
         <thead>
             <tr style="text-align:center;">
@@ -27,17 +26,19 @@
             <th colspan="2">Ações</th>
           </tr>
         </thead>
-        <tbody>       
-          @foreach($usersOfTheOrganization as $user)        
+        <tbody>
+          @foreach($usersOfTheOrganization as $user)
             <tr style="text-align:center;">
               <td>{{$user->name}}</td>
               <td>{{$user->email}}</td>
               <td>
-                <a style="margin: 1%" href="{{action('workersController@editUser', $user->id)}}" class="btn btn-warning">Editar</a></td>
+                <a style="margin: 1%" href="{{ action('workersController@editUser', $user->id) }}" class="btn btn-warning">Editar</a></td>
               </td>
               <td>
-                <form action="{{action('workersController@deleteUser', $user->id)}}" method="get">
-                    <button class="btn btn-danger" type="submit">Apagar</button>
+                <form action="{{ action('workersController@deleteUser', $user->id) }}" method="POST">
+                  @method('DELETE')
+                  @csrf
+                  <button class="btn btn-danger" type="submit">Apagar</button>
                 </form>
               </td>
             </tr>
