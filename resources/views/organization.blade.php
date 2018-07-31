@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Lista de Organizações</title>
-    <link rel="stylesheet" href="{{asset('css/app.css')}}">
-  </head>
-  <body>
+@extends('template.template')
+@section('content')
     <div class="container">
     <a  style="width:10%; margin-left: 90%;" href="{{url('/')}}" class="btn" > SAIR </a>
     @if (session('status'))
@@ -40,10 +34,11 @@
                   <button class="btn btn-danger" onclick="return confirm('Tem certeza que deseja apagar esta empresa?')" type="submit">Apagar</button>
                 </form>
               </td>
+              <td><a href="{{ route('data.organization.show', $organization->id) }}" class="btn btn-warning">detalhes</a></td>
             </tr>
           @endforeach
         </tbody>
       </table>
     </div>
-  </body>
-</html>
+@endsection
+

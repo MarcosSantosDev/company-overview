@@ -21,6 +21,8 @@ Route::prefix('organization')->group(function ()
   Route::delete('/delete/{id}', 'organizationController@deleteOrganization')->name('data.organization.delete');
 
   Route::get('/workers/{id}', 'organizationController@findUsersOrganization')->name('data.organization.find');
+
+  Route::get('/details/{id}', 'organizationController@show')->name('data.organization.show');
 });
 
 Route::prefix('user')->group(function()

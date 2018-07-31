@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Organization;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class organizationController extends Controller
 {
@@ -16,6 +18,7 @@ class organizationController extends Controller
 
         $organization->title = $request->get('title');
         $organization->description = $request->get('description');
+        // $organization->date = new Date();
 
         if($organization){
             $organization->save();
@@ -92,5 +95,16 @@ class organizationController extends Controller
     public function addUser($id)
     {
         return view('auth.register_user')->with(compact('id'));
+    }
+
+    public function show($id)
+    {
+      $title = 'Organização';
+
+      $organization = DB::table('organizations')
+                          ->where('id', '=', $id)
+                          ->get();
+
+      return view('details')->with(compact('id','organization', 'title'));
     }
 }

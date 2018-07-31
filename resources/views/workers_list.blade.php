@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Lista de funcionários</title>
-    <link rel="stylesheet" href="{{asset('css/app.css')}}">
-  </head>
-  <body>
+@extends('template.template')
+@section('content')
     <div class="container">
         <a  style="width:10%; margin: 1% 0% 0% 90%;" href="{{ route('data.organization.list') }}" class="btn" > Voltar </a></td>
       @if (session('status'))
@@ -46,5 +40,4 @@
         </tbody>
       </table>
     </div>
-  </body>
-</html>
+@endsection
