@@ -1,78 +1,61 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Models\Organization;
+use App\Models\Worker;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
-use App\Workers;
-use Illuminate\Http\Request;
-
 class workersController extends Controller
 {
-
-
     public function addUser(Request $request, $id)
     {
+      if($request->isMethod('post'))
+      {
+        $inputs = $request->all();
 
-      $worker= new Workers;
+        $dataForm = [
+          'organization_id' => $id,
+          'name'            => $inputs['name'],
+          'email'           => $inputs['email']
+        ];
 
-      $email = DB::table('users')->where('email','=' ,$request->get('email'))->get();
+        $createUser = Worker::create($dataForm);
 
-      // $worker->id_company = $id;
-      // $worker->name = $request->get('name');
-      // $worker->email = $request->get('email');
-      // $worker->password = $request->get('password');
-      // $validatePassword = $request->get('validatePassword');
-
-      $email_existe = json_decode($email) != [];
-
-      if($email_existe){
-        return redirect()->back()->with('status', 'Este email ja esta em uso!');
-      } else {
-        if($request->get('password') === $request->get('validatePassword')){
-
-          $workers = DB::table('users')->insert([
-            'id_company' => $id,
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'password' => $request->get('password'),
-          ]);
-          return redirect()->route('data.organization.find', compact('id'));
-        } else {
-          return redirect()->back()->with('status', 'Senhas não coecidem!');
-        }
+        return redirect()->route('data.users.find', compact('id'));
       }
+      return view('auth.register_user')->with(compact('id'));
     }
 
     public function editUser($id)
     {
-        $user = Workers::find($id);
+      $user = Worker::find($id);
 
-        return view('auth.edit_user', compact('user', 'id'));
+      return view('auth.edit_user', compact('user', 'id'));
     }
-
 
     public function updateUser(Request $request, $id)
     {
-        $user= Workers::find($id);
+      $inputs = $request->all();
 
-        $user->name=$request->get('name');
-        $user->email=$request->get('email');
-        $user->password=$request->get('password');
+      $user = Worker::find($id);
+      $user->update(['name' => $inputs['name'], 'email' => $inputs['email']]);
 
-        $user->save();
-
-        return redirect()->action('organizationController@findUsersOrganization', ['id' => $user->id_company]);
+      return redirect()->action('workersController@findUser', ['id' => $user->organization_id]);
     }
-
 
     public function deleteUser($id)
     {
-        $user = Workers::find($id);
+      Worker::destroy($id);
 
-        $user->delete();
+      return redirect()->back();
+    }
 
-        return redirect()->action('organizationController@findUsersOrganization', ['id' => $user->id_company]);
+    public function findUser($id)
+    {
+      $users = Organization::find($id)->with('workers')->get()->first();
+
+      return view('workers_list')->with(compact('users', 'id'));
     }
 }

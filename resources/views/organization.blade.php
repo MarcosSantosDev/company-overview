@@ -25,7 +25,7 @@
             <tr style="text-align:center;">
               <td>{{$organization->title}}</td>
               <td>{{$organization->description}}</td>
-              <td><a href="{{ route('data.organization.find', $organization->id) }}" class="btn btn-primary">Funcionarios</a></td>
+              <td><a href="{{ route('data.users.find', $organization->id) }}" class="btn btn-primary">Funcionarios</a></td>
               <td><a href="{{ route('data.organization.edit', $organization->id) }}" class="btn btn-warning">Editar</a></td>
               <td>
                 <form action="{{ route('data.organization.delete', $organization->id) }}" method="POST">
@@ -34,7 +34,7 @@
                   <button class="btn btn-danger" onclick="return confirm('Tem certeza que deseja apagar esta empresa?')" type="submit">Apagar</button>
                 </form>
               </td>
-              <td><a href="{{ route('data.organization.show', $organization->id) }}" class="btn btn-warning">detalhes</a></td>
+              <td><a href="{{ route('data.organization.details', $organization->id) }}" class="btn btn-warning">detalhes</a></td>
             </tr>
           @endforeach
         </tbody>

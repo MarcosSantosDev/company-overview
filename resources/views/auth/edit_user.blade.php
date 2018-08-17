@@ -28,15 +28,8 @@
           </div>
         <div class="row">
           <div class="col-md-4"></div>
-            <div class="form-group col-md-4">
-              <label for="number">Password:</label>
-              <input type="password" class="form-control" name="password" value="{{$user->password}}" required>
-            </div>
-          </div>
-        <div class="row">
-          <div class="col-md-4"></div>
           <div class="form-group col-md-4" style="margin-top:20px">
-            <a href="{{ route('data.organization.find', $user->id_company) }}" class="btn btn-danger" >Cancelar</a>
+            <a href="{{ route('data.users.find', $user->organization_id) }}" class="btn btn-danger" >Cancelar</a>
             <button type="submit" class="btn btn-success" style="left:30%">enviar</button>
           </div>
         </div>
