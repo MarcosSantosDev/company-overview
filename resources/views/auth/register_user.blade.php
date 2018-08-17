@@ -38,21 +38,17 @@
           </div>
         <div class="row">
           <div class="col-md-4"></div>
-            <div class="form-group col-md-4">
-              <label for="Password">senha:</label>
-              <input type="password" class="form-control" name="password" value="{{old('password')}}">
+            <div class="col-md-4">
             </div>
           </div>
           <div class="row">
           <div class="col-md-4"></div>
-            <div class="form-group col-md-4">
-              <label for="Password">Comfirme sua senha:</label>
-              <input type="password" class="form-control" name="validatePassword" value="{{old('validatePassword')}}">
+            <div class="col-md-4">
             </div>
           </div>
           <div class="col-md-4"></div>
           <div class="form-group col-md-4" style="margin-top:10px;">
-            <a href="{{ route('data.organization.find', $id) }}" class="btn btn-danger" >Cancelar</a>
+            <a href="{{ route('data.users.find', $id) }}" class="btn btn-danger" >Cancelar</a>
             <button type="submit" class="btn btn-success" >Cadastrar</button>
           </div>
       </form>

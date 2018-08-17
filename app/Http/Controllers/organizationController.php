@@ -2,38 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Organization;
+use App\Models\Organization;
+use App\Models\Worker;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class organizationController extends Controller
 {
 
-
     public function addOrganization(Request $request)
     {
+      $organization = Organization::create($request->all());
 
-        $organization= new Organization;
-
-        $organization->title = $request->get('title');
-        $organization->description = $request->get('description');
-
-        if($organization){
-            $organization->save();
-            return redirect()->route('data.organization.list')->with('status', 'Empresa criada com sucesso!');
-        }else{
-            return redirect()->route('data.organization.list')->with('status', 'Todos os campos devem ser preenchidos!');
-        }
+      return redirect()->route('data.organization.list')->with('status', 'Empresa criada com sucesso!');
     }
 
-    public function getOrganization()
+    public function getOrganizations()
     {
-        $organizations= Organization::all();
+      $organizations= Organization::all();
 
-        if($organizations){
-            return view('organization', ['organizations' => $organizations]);
-        }else{
-            return view('organization');
-        }
+      return view('organization', ['organizations' => $organizations]);
     }
 
     public function editOrganization($id)
@@ -45,52 +34,25 @@ class organizationController extends Controller
 
     public function updateOrganization(Request $request, $id)
     {
-        $organization= Organization::find($id);
-        $organization->title=$request->get('title');
-        $organization->description=$request->get('description');
+        $inputs = $request->all();
+        $organization = Organization::find($id);
+        $organization->update($inputs);
 
-        $organization->save();
-        return redirect()->route('data.organization.list')->with('success','Dados atualizado com sucesso!');
+        return redirect()->route('data.organization.list')->with('status','Dados atualizado com sucesso!');
     }
-
 
     public function deleteOrganization($id)
     {
-        $organization = Organization::find($id);
-        $users = \App\Workers::all();
+      $organization = Organization::destroy($id);
 
-        foreach($users as $user){
-            if($user->id_company == $id){
-                $user->delete();
-            }
-        }
-
-        $organization->delete();
-
-        return redirect()->route('data.organization.list')->with('success','Empresa deletada com sucesso!');
+      return redirect()->route('data.organization.list')->with('status','Empresa deletada com sucesso!');
     }
 
-    public function findUsersOrganization($id)
+    public function details($id)
     {
-        $users=\App\Workers::all();
+      $title = 'Organização';
+      $organization = json_decode(Organization::find($id));
 
-        $usersOfTheOrganization = [];
-
-        foreach ($users as $user) {
-            if($user->id_company == $id){
-                array_push($usersOfTheOrganization, $user);
-            }
-        }
-
-        if($usersOfTheOrganization){
-            return view('workers_list')->with(compact('usersOfTheOrganization', 'id'));
-        }else{
-            return view('workers_list')->with(compact('usersOfTheOrganization', 'id'));
-        }
-    }
-
-    public function addUser($id)
-    {
-        return view('auth.register_user')->with(compact('id'));
+      return view('details')->with(compact('organization', 'title'));
     }
 }
